@@ -16,9 +16,8 @@ export const App = () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
 	}, [])
-	console.log({
-		commandsssss: getCommands(),
-	})
+
+	getCommands()
 
 	const [gitInfo, setGitInfo] = useState('')
 
