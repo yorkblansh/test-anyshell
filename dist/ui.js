@@ -8,10 +8,14 @@ import * as A from 'fp-ts/lib/Array.js';
 import figures from 'figures';
 import { pipe } from 'fp-ts/lib/function.js';
 import { useBeforeRender } from './hooks/useBeforeRender.js';
+import { getCommands } from './getCommands.js';
 export const App = () => {
     useBeforeRender(() => {
         shell.exec('clear');
     }, []);
+    console.log({
+        commandsssss: getCommands(),
+    });
     const [gitInfo, setGitInfo] = useState('');
     const commands = {
         // testShell: () => {
