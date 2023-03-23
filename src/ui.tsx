@@ -12,13 +12,13 @@ import { pipe } from 'fp-ts/lib/function.js'
 import { useBeforeRender } from './hooks/useBeforeRender.js'
 import { getCommands } from './getCommands.js'
 
-export const App = () => {
+export const App = async () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
 	}, [])
-	console.log({
-		commandsssss: getCommands(),
-	})
+	// console.log({
+	await getCommands()
+	// })
 
 	const [gitInfo, setGitInfo] = useState('')
 
