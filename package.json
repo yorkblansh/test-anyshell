@@ -1,8 +1,11 @@
 {
 	"name": "test-anyshell",
-	"version": "0.1.0",
+	"version": "0.0.1",
 	"bin": "./dist/index.js",
 	"type": "module",
+	"repository": {
+		"url": "https://github.com/yorkblansh/test-anyshell"
+	},
 	"engines": {
 		"node": ">=16"
 	},
