@@ -5,5 +5,4 @@ node_modules
 .prettierignore
 .yarnrc.yml
 src
-README.md
 .editorconfig
