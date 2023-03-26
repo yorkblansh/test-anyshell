@@ -17,16 +17,14 @@ const commandExecutor = (
 	{ shellCommand, setup }: Command,
 	cb: (ecbProps: ExecutorCallbackProps) => void,
 ) => {
-	const shellProcess = shell.exec(shellCommand, { async: true, silent: true })
+	const shellProcess = shell.exec(shellCommand, { async: true, silent: false })
 
 	if (setup) {
 		if (setup === 'docker_compose') {
 			console.log('docker_compose !!!')
 			shellProcess.on('exit', (code, signal) => {
-				if (code) {
-					console.log({ hereisthecode: code })
-					cb({ dockerComposeExitCode: code })
-				}
+				console.log({ hereisthecode: code })
+				cb({ dockerComposeExitCode: code as number })
 			})
 		}
 	}
