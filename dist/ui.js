@@ -13,13 +13,17 @@ const commandExecutor = ({ shellCommand, setup }, cb) => {
         if (setup === 'docker_compose') {
             console.log('docker_compose !!!');
             shellProcess.on('close', (code, signal) => {
-                console.log({ hereisthecode: code });
-                // cb({ dockerComposeExitCode: code as number })
+                // console.log({ hereisthecode: code })
+                cb({ dockerComposeExitCode: code });
             });
-            shellProcess.on('message', (code, signal) => {
-                console.log({ hereisthemessage: code });
-                // cb({ dockerComposeExitCode: code as number })
-            });
+            // shellProcess.on('message', (code, signal) => {
+            // 	console.log({ hereisthemessage: code })
+            // 	// cb({ dockerComposeExitCode: code as number })
+            // })
+            // shellProcess.on('', (code, signal) => {
+            // 	console.log({ hereisthemessage: code })
+            // 	// cb({ dockerComposeExitCode: code as number })
+            // })
         }
     }
 };
@@ -44,7 +48,7 @@ export const App = () => {
             "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043A\u043E\u043D\u0444\u0438\u0433-\u0444\u0430\u0439\u043B:",
             ' ',
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { onSelect: (item) => commandExecutor(item.value, (cbProps) => {
-                console.log(cbProps);
+                console.log({ cbProps });
                 // b(cbProps.dockerComposeExitCode.toString())
             }), items: Object.keys(parsedYaml.commandList).map((commandName) => ({
                 label: commandName,

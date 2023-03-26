@@ -23,13 +23,17 @@ const commandExecutor = (
 		if (setup === 'docker_compose') {
 			console.log('docker_compose !!!')
 			shellProcess.on('close', (code, signal) => {
-				console.log({ hereisthecode: code })
-				// cb({ dockerComposeExitCode: code as number })
+				// console.log({ hereisthecode: code })
+				cb({ dockerComposeExitCode: code as number })
 			})
-			shellProcess.on('message', (code, signal) => {
-				console.log({ hereisthemessage: code })
-				// cb({ dockerComposeExitCode: code as number })
-			})
+			// shellProcess.on('message', (code, signal) => {
+			// 	console.log({ hereisthemessage: code })
+			// 	// cb({ dockerComposeExitCode: code as number })
+			// })
+			// shellProcess.on('', (code, signal) => {
+			// 	console.log({ hereisthemessage: code })
+			// 	// cb({ dockerComposeExitCode: code as number })
+			// })
 		}
 	}
 }
@@ -68,7 +72,7 @@ export const App = () => {
 				<SelectInput
 					onSelect={(item) =>
 						commandExecutor(item.value, (cbProps) => {
-							console.log(cbProps)
+							console.log({cbProps})
 							// b(cbProps.dockerComposeExitCode.toString())
 						})
 					}
