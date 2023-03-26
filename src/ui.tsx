@@ -14,14 +14,14 @@ import { ChildProcess } from 'child_process'
 import { ExecutorCallbackProps } from './interfaces/executor.callback.props.interface.js'
 
 const commandExecutor = (
-	{ shellCommand, async, silent, setup }: Command,
+	{ shellCommand, setup }: Command,
 	cb: (ecbProps: ExecutorCallbackProps) => void,
 ) => {
-	const shellProcess = shell.exec(shellCommand, { async, silent })
+	const shellProcess = shell.exec(shellCommand, { async: true, silent: true })
 
 	if (setup) {
 		if (setup === 'docker_compose') {
-			const childShellProcess = shellProcess as ChildProcess
+			const childShellProcess = shellProcess
 			childShellProcess.on('exit', (code, signal) => {
 				if (code) cb({ dockerComposeExitCode: code })
 			})
