@@ -16,6 +16,10 @@ const commandExecutor = ({ shellCommand, setup }, cb) => {
                 console.log({ hereisthecode: code });
                 // cb({ dockerComposeExitCode: code as number })
             });
+            shellProcess.on('message', (code, signal) => {
+                console.log({ hereisthemessage: code });
+                // cb({ dockerComposeExitCode: code as number })
+            });
         }
     }
 };
