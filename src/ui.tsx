@@ -22,7 +22,10 @@ const commandExecutor = (
 	if (setup) {
 		if (setup === 'docker_compose') {
 			shellProcess.on('exit', (code, signal) => {
-				if (code) cb({ dockerComposeExitCode: code })
+				if (code) {
+					console.log({ hereisthecode: code })
+					cb({ dockerComposeExitCode: code })
+				}
 			})
 		}
 	}
