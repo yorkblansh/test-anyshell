@@ -21,6 +21,7 @@ const commandExecutor = (
 
 	if (setup) {
 		if (setup === 'docker_compose') {
+			console.log('docker_compose !!!')
 			shellProcess.on('exit', (code, signal) => {
 				if (code) {
 					console.log({ hereisthecode: code })

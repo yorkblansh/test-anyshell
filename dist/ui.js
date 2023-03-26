@@ -11,6 +11,7 @@ const commandExecutor = ({ shellCommand, setup }, cb) => {
     const shellProcess = shell.exec(shellCommand, { async: true, silent: true });
     if (setup) {
         if (setup === 'docker_compose') {
+            console.log('docker_compose !!!');
             shellProcess.on('exit', (code, signal) => {
                 if (code) {
                     console.log({ hereisthecode: code });
