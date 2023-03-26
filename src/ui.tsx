@@ -62,7 +62,8 @@ export const App = () => {
 				<SelectInput
 					onSelect={(item) =>
 						commandExecutor(item.value, (cbProps) => {
-							b(cbProps.dockerComposeExitCode.toString())
+							console.log(cbProps)
+							// b(cbProps.dockerComposeExitCode.toString())
 						})
 					}
 					items={Object.keys(parsedYaml.commandList).map((commandName) => ({

@@ -39,7 +39,8 @@ export const App = () => {
             "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043A\u043E\u043D\u0444\u0438\u0433-\u0444\u0430\u0439\u043B:",
             ' ',
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { onSelect: (item) => commandExecutor(item.value, (cbProps) => {
-                b(cbProps.dockerComposeExitCode.toString());
+                console.log(cbProps);
+                // b(cbProps.dockerComposeExitCode.toString())
             }), items: Object.keys(parsedYaml.commandList).map((commandName) => ({
                 label: commandName,
                 key: commandName,
