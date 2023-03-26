@@ -21,10 +21,12 @@ const commandExecutor = (
 
 	if (setup) {
 		if (setup === 'docker_compose') {
-			const childShellProcess = shellProcess
-			childShellProcess.on('exit', (code, signal) => {
-				if (code) cb({ dockerComposeExitCode: code })
-			})
+			shellProcess.on !== undefined
+				? shellProcess.on('exit', (code, signal) => {
+						console.log(code)
+						// if (code) cb({ dockerComposeExitCode: code })
+				  })
+				: console.log('on --- is not found!!!!')
 		}
 	}
 }
