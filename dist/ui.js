@@ -8,13 +8,13 @@ import figures from 'figures';
 import { useBeforeRender } from './hooks/useBeforeRender.js';
 import { useCommandList } from './hooks/useCommands.js';
 const commandExecutor = ({ shellCommand, setup }, cb) => {
-    const shellProcess = shell.exec(shellCommand, { async: true, silent: false });
+    const shellProcess = shell.exec(shellCommand, { async: true, silent: true });
     if (setup) {
         if (setup === 'docker_compose') {
             console.log('docker_compose !!!');
-            shellProcess.on('exit', (code, signal) => {
+            shellProcess.on('close', (code, signal) => {
                 console.log({ hereisthecode: code });
-                cb({ dockerComposeExitCode: code });
+                // cb({ dockerComposeExitCode: code as number })
             });
         }
     }
