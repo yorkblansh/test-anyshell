@@ -7,15 +7,16 @@ import shell from 'shelljs';
 import figures from 'figures';
 import { useBeforeRender } from './hooks/useBeforeRender.js';
 import { useCommandList } from './hooks/useCommands.js';
-const commandExecutor = ({ shellCommand, async, silent, setup }, cb) => {
-    const shellProcess = shell.exec(shellCommand, { async, silent });
+const commandExecutor = ({ shellCommand, setup }, cb) => {
+    const shellProcess = shell.exec(shellCommand, { async: true, silent: true });
     if (setup) {
         if (setup === 'docker_compose') {
-            const childShellProcess = shellProcess;
-            childShellProcess.on('exit', (code, signal) => {
-                if (code)
-                    cb({ dockerComposeExitCode: code });
-            });
+            shellProcess.on !== undefined
+                ? shellProcess.on('exit', (code, signal) => {
+                    console.log(code);
+                    // if (code) cb({ dockerComposeExitCode: code })
+                })
+                : console.log('on --- is not found!!!!');
         }
     }
 };
