@@ -43,7 +43,7 @@ export const App = () => {
 		shell.exec('clear')
 	}, [])
 
-	const [a, b] = useState('')
+	const [a, b] = useState<number>(99)
 
 	const { parsedYaml, isError, isLoading } = useCommandList()
 
@@ -72,8 +72,8 @@ export const App = () => {
 				<SelectInput
 					onSelect={(item) =>
 						commandExecutor(item.value, (cbProps) => {
-							console.log({cbProps})
-							// b(cbProps.dockerComposeExitCode.toString())
+							console.log({ cbProps })
+							b(cbProps.dockerComposeExitCode)
 						})
 					}
 					items={Object.keys(parsedYaml.commandList).map((commandName) => ({
@@ -84,7 +84,7 @@ export const App = () => {
 					indicatorComponent={({ isSelected }) =>
 						isSelected ? (
 							<Text color="#ffff86">
-								{a === 'done' ? 'done' : null} {figures.pointer}
+								{a === 0 ? 'done' : null} {figures.pointer}
 							</Text>
 						) : null
 					}

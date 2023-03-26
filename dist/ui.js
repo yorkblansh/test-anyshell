@@ -31,7 +31,7 @@ export const App = () => {
     useBeforeRender(() => {
         shell.exec('clear');
     }, []);
-    const [a, b] = useState('');
+    const [a, b] = useState(99);
     const { parsedYaml, isError, isLoading } = useCommandList();
     return (React.createElement(React.Fragment, null,
         React.createElement(Text, null,
@@ -49,13 +49,13 @@ export const App = () => {
             ' ',
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { onSelect: (item) => commandExecutor(item.value, (cbProps) => {
                 console.log({ cbProps });
-                // b(cbProps.dockerComposeExitCode.toString())
+                b(cbProps.dockerComposeExitCode);
             }), items: Object.keys(parsedYaml.commandList).map((commandName) => ({
                 label: commandName,
                 key: commandName,
                 value: parsedYaml.commandList[commandName],
             })), indicatorComponent: ({ isSelected }) => isSelected ? (React.createElement(Text, { color: "#ffff86" },
-                a === 'done' ? 'done' : null,
+                a === 0 ? 'done' : null,
                 " ",
                 figures.pointer)) : null, itemComponent: ({ isSelected, label }) => isSelected ? (React.createElement(Text, { color: "#ff5eea" },
                 " ",
