@@ -11,12 +11,10 @@ const commandExecutor = ({ shellCommand, setup }, cb) => {
     const shellProcess = shell.exec(shellCommand, { async: true, silent: true });
     if (setup) {
         if (setup === 'docker_compose') {
-            shellProcess.on !== undefined
-                ? shellProcess.on('exit', (code, signal) => {
-                    console.log(code);
-                    // if (code) cb({ dockerComposeExitCode: code })
-                })
-                : console.log('on --- is not found!!!!');
+            shellProcess.on('exit', (code, signal) => {
+                if (code)
+                    cb({ dockerComposeExitCode: code });
+            });
         }
     }
 };
