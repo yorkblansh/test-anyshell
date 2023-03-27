@@ -24,16 +24,11 @@ const commandExecutor = (
 			console.log('docker_compose !!!')
 			shellProcess.on('close', (code, signal) => {
 				// console.log({ hereisthecode: code })
-				cb({ dockerComposeExitCode: code as number })
+				cb({ dockerComposeExitCode: code })
 			})
-			// shellProcess.on('message', (code, signal) => {
-			// 	console.log({ hereisthemessage: code })
-			// 	// cb({ dockerComposeExitCode: code as number })
-			// })
-			// shellProcess.on('', (code, signal) => {
-			// 	console.log({ hereisthemessage: code })
-			// 	// cb({ dockerComposeExitCode: code as number })
-			// })
+			shellProcess.stdout?.on('data', (chunk) => {
+				cb({ stdoChunk: chunk })
+			})
 		}
 	}
 }
@@ -43,7 +38,8 @@ export const App = () => {
 		shell.exec('clear')
 	}, [])
 
-	const [a, b] = useState<number>(99)
+	const [isDone, setIsDone] = useState(false)
+	const [chunk, setCunk] = useState<any>({})
 
 	const { parsedYaml, isError, isLoading } = useCommandList()
 
@@ -72,8 +68,9 @@ export const App = () => {
 				<SelectInput
 					onSelect={(item) =>
 						commandExecutor(item.value, (cbProps) => {
-							console.log({ cbProps })
-							b(cbProps.dockerComposeExitCode)
+							if (cbProps.dockerComposeExitCode)
+								setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false)
+							if (cbProps.stdoChunk) console.log(cbProps.stdoChunk)
 						})
 					}
 					items={Object.keys(parsedYaml.commandList).map((commandName) => ({
@@ -84,7 +81,7 @@ export const App = () => {
 					indicatorComponent={({ isSelected }) =>
 						isSelected ? (
 							<Text color="#ffff86">
-								{a === 0 ? 'done' : null} {figures.pointer}
+								{isDone ? 'done' : null} {figures.pointer}
 							</Text>
 						) : null
 					}
