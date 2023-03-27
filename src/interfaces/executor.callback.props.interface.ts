@@ -1,3 +1,4 @@
 export interface ExecutorCallbackProps {
-	dockerComposeExitCode: number
+	dockerComposeExitCode?: number | null
+	stdoChunk?: any
 }

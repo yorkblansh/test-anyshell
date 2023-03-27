@@ -16,14 +16,9 @@ const commandExecutor = ({ shellCommand, setup }, cb) => {
                 // console.log({ hereisthecode: code })
                 cb({ dockerComposeExitCode: code });
             });
-            // shellProcess.on('message', (code, signal) => {
-            // 	console.log({ hereisthemessage: code })
-            // 	// cb({ dockerComposeExitCode: code as number })
-            // })
-            // shellProcess.on('', (code, signal) => {
-            // 	console.log({ hereisthemessage: code })
-            // 	// cb({ dockerComposeExitCode: code as number })
-            // })
+            shellProcess.stdout?.on('data', (chunk) => {
+                cb({ stdoChunk: chunk });
+            });
         }
     }
 };
@@ -31,7 +26,8 @@ export const App = () => {
     useBeforeRender(() => {
         shell.exec('clear');
     }, []);
-    const [a, b] = useState(99);
+    const [isDone, setIsDone] = useState(false);
+    const [chunk, setCunk] = useState({});
     const { parsedYaml, isError, isLoading } = useCommandList();
     return (React.createElement(React.Fragment, null,
         React.createElement(Text, null,
@@ -48,14 +44,16 @@ export const App = () => {
             "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043A\u043E\u043D\u0444\u0438\u0433-\u0444\u0430\u0439\u043B:",
             ' ',
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { onSelect: (item) => commandExecutor(item.value, (cbProps) => {
-                console.log({ cbProps });
-                b(cbProps.dockerComposeExitCode);
+                if (cbProps.dockerComposeExitCode)
+                    setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);
+                if (cbProps.stdoChunk)
+                    console.log(cbProps.stdoChunk);
             }), items: Object.keys(parsedYaml.commandList).map((commandName) => ({
                 label: commandName,
                 key: commandName,
                 value: parsedYaml.commandList[commandName],
             })), indicatorComponent: ({ isSelected }) => isSelected ? (React.createElement(Text, { color: "#ffff86" },
-                a === 0 ? 'done' : null,
+                isDone ? 'done' : null,
                 " ",
                 figures.pointer)) : null, itemComponent: ({ isSelected, label }) => isSelected ? (React.createElement(Text, { color: "#ff5eea" },
                 " ",
