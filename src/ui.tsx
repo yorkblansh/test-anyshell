@@ -55,7 +55,7 @@ export const App = () => {
 			</Text>
 			<Text> </Text>
 			<Text>
-				{chalk.bgBlue(' INFO ')} Стрелками вверх и вниз выберите приложение для
+				{chalk.bgBlue(' INFO ')} Стрелками update tst вверх и вниз выберите приложение для
 				запуска
 			</Text>
 			{isLoading ? (
