@@ -9,29 +9,7 @@ import Spinner from 'ink-spinner'
 import figures from 'figures'
 import { useBeforeRender } from './hooks/useBeforeRender.js'
 import { useCommandList } from './hooks/useCommands.js'
-import { Command } from './interfaces/commandList.interface.js'
-import { ChildProcess } from 'child_process'
-import { ExecutorCallbackProps } from './interfaces/executor.callback.props.interface.js'
-
-const commandExecutor = (
-	{ shellCommand, setup }: Command,
-	cb: (ecbProps: ExecutorCallbackProps) => void,
-) => {
-	const shellProcess = shell.exec(shellCommand, { async: true, silent: true })
-
-	if (setup) {
-		if (setup === 'docker_compose') {
-			console.log('docker_compose !!!')
-			shellProcess.on('close', (code, signal) => {
-				// console.log({ hereisthecode: code })
-				cb({ dockerComposeExitCode: code })
-			})
-			shellProcess.stdout?.on('data', (chunk) => {
-				cb({ stdoChunk: chunk })
-			})
-		}
-	}
-}
+import { commandExecutor } from './commandExecutor.js'
 
 export const App = () => {
 	useBeforeRender(() => {
@@ -51,8 +29,8 @@ export const App = () => {
 			</Text>
 			<Text> </Text>
 			<Text>
-				{chalk.bgBlue(' INFO ')} Стрелками update tst вверх и вниз выберите приложение для
-				запуска
+				{chalk.bgBlue(' INFO ')} Стрелками update tst вверх и вниз выберите
+				приложение для запуска
 			</Text>
 			{isLoading ? (
 				<Text>
@@ -70,7 +48,7 @@ export const App = () => {
 						commandExecutor(item.value, (cbProps) => {
 							if (cbProps.dockerComposeExitCode)
 								setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false)
-							if (cbProps.stdoChunk) console.log(cbProps.stdoChunk)
+							if (cbProps.stdoChunk) console.log({ _chunk_: cbProps.stdoChunk })
 						})
 					}
 					items={Object.keys(parsedYaml.commandList).map((commandName) => ({

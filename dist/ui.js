@@ -7,21 +7,7 @@ import shell from 'shelljs';
 import figures from 'figures';
 import { useBeforeRender } from './hooks/useBeforeRender.js';
 import { useCommandList } from './hooks/useCommands.js';
-const commandExecutor = ({ shellCommand, setup }, cb) => {
-    const shellProcess = shell.exec(shellCommand, { async: true, silent: true });
-    if (setup) {
-        if (setup === 'docker_compose') {
-            console.log('docker_compose !!!');
-            shellProcess.on('close', (code, signal) => {
-                // console.log({ hereisthecode: code })
-                cb({ dockerComposeExitCode: code });
-            });
-            shellProcess.stdout?.on('data', (chunk) => {
-                cb({ stdoChunk: chunk });
-            });
-        }
-    }
-};
+import { commandExecutor } from './commandExecutor.js';
 export const App = () => {
     useBeforeRender(() => {
         shell.exec('clear');
@@ -36,7 +22,7 @@ export const App = () => {
         React.createElement(Text, null, " "),
         React.createElement(Text, null,
             chalk.bgBlue(' INFO '),
-            " \u0421\u0442\u0440\u0435\u043B\u043A\u0430\u043C\u0438 \u0432\u0432\u0435\u0440\u0445 \u0438 \u0432\u043D\u0438\u0437 \u0432\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435 \u0434\u043B\u044F \u0437\u0430\u043F\u0443\u0441\u043A\u0430"),
+            " \u0421\u0442\u0440\u0435\u043B\u043A\u0430\u043C\u0438 update tst \u0432\u0432\u0435\u0440\u0445 \u0438 \u0432\u043D\u0438\u0437 \u0432\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435 \u0434\u043B\u044F \u0437\u0430\u043F\u0443\u0441\u043A\u0430"),
         isLoading ? (React.createElement(Text, null,
             "\u0427\u0442\u0435\u043D\u0438\u0435 \u043A\u043E\u043D\u0444\u0438\u0433\u0430:",
             ' ',
@@ -47,7 +33,7 @@ export const App = () => {
                 if (cbProps.dockerComposeExitCode)
                     setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);
                 if (cbProps.stdoChunk)
-                    console.log(cbProps.stdoChunk);
+                    console.log({ _chunk_: cbProps.stdoChunk });
             }), items: Object.keys(parsedYaml.commandList).map((commandName) => ({
                 label: commandName,
                 key: commandName,
