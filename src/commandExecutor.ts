@@ -2,6 +2,8 @@ import { Command } from './interfaces/commandList.interface.js'
 import { ExecutorCallbackProps } from './interfaces/executor.callback.props.interface.js'
 import shelljs from 'shelljs'
 
+const agregateDockerComposeChunk = (chunk: string) => {}
+
 export const commandExecutor = (
 	{ shellCommand, setup }: Command,
 	cb: (ecbProps: ExecutorCallbackProps) => void,
@@ -15,7 +17,7 @@ export const commandExecutor = (
 				cb({ dockerComposeExitCode: code })
 			})
 			shellProcess.stdout?.on('data', (chunk) => {
-				cb({ stdoChunk: chunk })
+				cb({ stdoChunk: chunk.toString() })
 			})
 		}
 	}
