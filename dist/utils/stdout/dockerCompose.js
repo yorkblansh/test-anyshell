@@ -7,8 +7,7 @@ export const containersBuildStepList = (data) => {
             .map((match) => {
             const matchElements = match.split(' ');
             if (matchElements.length === 3) {
-                return matchElements
-                    .map((v, i) => ({
+                return matchElements.map((v, i) => ({
                     globalStep: matchElements[0],
                     imageName: matchElements[1],
                     currentImageSteps: matchElements[2]
@@ -21,9 +20,9 @@ export const containersBuildStepList = (data) => {
                                 totalSteps: stepValues[1],
                             };
                     })[0],
-                }))
-                    .flat();
+                }));
             }
-        });
+        })
+            .flat();
     }
 };
