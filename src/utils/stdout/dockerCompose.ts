@@ -13,12 +13,12 @@ export const containersBuildStepList = (data: string) => {
 					currentImageSteps: matchElements[2]
 						.trim()
 						.split('/')
-						.map((v, i, arr) => {
-							if (arr.length === 2)
-								return arr.map((v, i, stepValues) => ({
+						.map((v, i, stepValues) => {
+							if (stepValues.length === 2)
+								return {
 									currentStep: stepValues[0],
 									totalSteps: stepValues[1],
-								}))
+								}
 						}),
 				}))
 			}
