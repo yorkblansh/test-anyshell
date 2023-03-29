@@ -1,4 +1,5 @@
 import shelljs from 'shelljs';
+import { containersBuildStepList } from './utils/stdout/dockerCompose.js';
 const agregateDockerComposeChunk = (chunk) => {
     const match = chunk.match(/#\d{1,} \[\S+ \d{1,}\/\d{1,}\]/gm);
     if (match)
@@ -14,7 +15,7 @@ export const commandExecutor = ({ shellCommand, setup }, cb) => {
                 // cb({ dockerComposeExitCode: code })
             });
             shellProcess.stdout?.on('data', (chunk) => {
-                agregateDockerComposeChunk(chunk);
+                console.log({ check: containersBuildStepList(chunk) });
                 // cb({ stdoChunk: chunk.toString() })
             });
         }
