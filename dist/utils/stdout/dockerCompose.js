@@ -1,4 +1,17 @@
-export const containersBuildStepList = (data) => {
+export const dockerComposeProcessHandler = (childProcess, cb) => {
+    const containersInfo = new Map();
+    console.log('docker_compose !!!');
+    childProcess.on('close', (code, signal) => {
+        console.log({ exitCode: code, isDone: code === 0 ? true : false });
+        // cb({ dockerComposeExitCode: code })
+    });
+    childProcess.stdout?.on('data', (chunk) => {
+        const stepList = containersBuildStepList(chunk);
+        if (stepList)
+            stepList.map((step) => { });
+    });
+};
+const containersBuildStepList = (data) => {
     // example of regexp below: [ `#12 [image-name 4/6]` ]
     const matchList = data.match(/#\d{1,} \[\S+ \d{1,}\/\d{1,}\]/gm);
     if (matchList) {
@@ -7,7 +20,7 @@ export const containersBuildStepList = (data) => {
             .map((match) => {
             const matchElements = match.split(' ');
             if (matchElements.length === 3) {
-                return matchElements.map((v, i) => ({
+                return matchElements.map(() => ({
                     globalStep: matchElements[0],
                     imageName: matchElements[1],
                     currentImageSteps: matchElements[2]
@@ -23,6 +36,7 @@ export const containersBuildStepList = (data) => {
                 }));
             }
         })
+            .filter((v) => v !== undefined)
             .flat();
     }
 };
