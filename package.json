@@ -1,6 +1,6 @@
 {
 	"name": "test-anyshell",
-	"version": "0.2.24",
+	"version": "0.2.25",
 	"bin": "./dist/index.js",
 	"type": "module",
 	"repository": {
