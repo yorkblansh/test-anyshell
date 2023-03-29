@@ -15,7 +15,7 @@ export const commandExecutor = ({ shellCommand, setup }, cb) => {
                 // cb({ dockerComposeExitCode: code })
             });
             shellProcess.stdout?.on('data', (chunk) => {
-                console.log({ check: containersBuildStepList(chunk) });
+                console.dir({ check: containersBuildStepList(chunk) });
                 // cb({ stdoChunk: chunk.toString() })
             });
         }
