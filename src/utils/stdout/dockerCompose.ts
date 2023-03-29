@@ -19,7 +19,7 @@ export const containersBuildStepList = (data: string) => {
 									currentStep: stepValues[0],
 									totalSteps: stepValues[1],
 								}
-						}),
+						})[0],
 				}))
 			}
 		})
