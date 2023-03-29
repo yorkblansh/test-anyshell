@@ -23,7 +23,7 @@ export const commandExecutor = (
 			})
 			shellProcess.stdout?.on('data', (chunk) => {
 				console.dir(
-					{ check: containersBuildStepList(chunk)?.flat() },
+					{ check: containersBuildStepList(chunk) },
 					{ showHidden: false, depth: null, colors: true },
 				)
 				// cb({ stdoChunk: chunk.toString() })
