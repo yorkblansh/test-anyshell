@@ -7,7 +7,7 @@ export const dockerComposeProcessHandler = (childProcess, cb) => {
     });
     childProcess.stdout?.on('data', (chunk) => {
         const stepList = containersBuildStepList(chunk);
-        console.log({ stepList });
+        console.dir({ stepList }, { depth: null, colors: true });
         // if (stepList) stepList.map((step) => {})
     });
 };
