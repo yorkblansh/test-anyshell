@@ -19,8 +19,7 @@ const containersBuildStepList = (data) => {
         .map((match) => {
         const matchElements = match.split(' ');
         if (matchElements.length === 3) {
-            return matchElements
-                .map(() => ({
+            return matchElements.map(() => ({
                 globalStep: matchElements[0],
                 imageName: matchElements[1],
                 currentImageSteps: matchElements[2]
@@ -33,10 +32,9 @@ const containersBuildStepList = (data) => {
                             totalSteps: stepValues[1],
                         };
                 })[0],
-            }))
-                .filter((v) => v !== undefined);
+            }));
         }
     })
-        .filter((v) => v !== undefined)
-        .flat();
+        .flat()
+        .filter((v) => v !== undefined);
 };
