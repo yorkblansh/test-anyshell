@@ -32,15 +32,14 @@ export const dockerComposeProcessHandler: StdHandler = (
 const containersBuildStepList = (data: string) => {
 	// example of regexp below: [ `#12 [image-name 4/6]` ]
 	const matchList = data.match(/#\d{1,} \[\S+ \d{1,}\/\d{1,}\]/gm)
+	return matchList
+		?.map((match) => match.replace(/\[/g, '').replace(/\]/g, ''))
+		.map((match) => {
+			const matchElements = match.split(' ')
 
-	if (matchList) {
-		return matchList
-			.map((match) => match.replace(/\[/g, '').replace(/\]/g, ''))
-			.map((match) => {
-				const matchElements = match.split(' ')
-
-				if (matchElements.length === 3) {
-					return matchElements.map(
+			if (matchElements.length === 3) {
+				return matchElements
+					.map(
 						(): ContainerBuildStepInfo => ({
 							globalStep: matchElements[0],
 							imageName: matchElements[1],
@@ -56,9 +55,9 @@ const containersBuildStepList = (data: string) => {
 								})[0],
 						}),
 					)
-				}
-			})
-			.filter((v) => v !== undefined)
-			.flat()
-	}
+					.filter((v) => v !== undefined)
+			}
+		})
+		.filter((v) => v !== undefined)
+		.flat()
 }
