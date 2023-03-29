@@ -48,7 +48,8 @@ export const App = () => {
 						commandExecutor(item.value, (cbProps) => {
 							if (cbProps.dockerComposeExitCode)
 								setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false)
-							if (cbProps.stdoChunk) console.log({ _chunk_: cbProps.stdoChunk })
+							if (cbProps.dockerComposePercent)
+								console.log({ percent: cbProps.dockerComposePercent })
 						})
 					}
 					items={Object.keys(parsedYaml.commandList).map((commandName) => ({

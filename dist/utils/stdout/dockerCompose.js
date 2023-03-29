@@ -1,3 +1,4 @@
+import _ from 'lodash';
 export const dockerComposeProcessHandler = (childProcess, cb) => {
     const containersInfo = new Map();
     console.log('docker_compose !!!');
@@ -7,10 +8,27 @@ export const dockerComposeProcessHandler = (childProcess, cb) => {
     });
     childProcess.stdout?.on('data', (chunk) => {
         const stepList = containersBuildStepList(chunk);
-        if (stepList)
-            console.dir({ stepList }, { depth: null, colors: true });
-        // if (stepList) stepList.map((step) => {})
+        const percents = getDockerComposeProcessPercents(stepList, containersInfo);
+        if (percents)
+            cb({ dockerComposePercent: percents });
     });
+};
+const getDockerComposeProcessPercents = (stepList, containersInfo) => {
+    let totalSteps = 0;
+    if (stepList) {
+        stepList.map((containerBuildStepInfo) => {
+            if (containerBuildStepInfo && containerBuildStepInfo.currentImageSteps) {
+                totalSteps = Number(containerBuildStepInfo.currentImageSteps.totalSteps);
+                containersInfo.set(containerBuildStepInfo.imageName, containerBuildStepInfo);
+            }
+        });
+    }
+    if (containersInfo.size !== 0 && totalSteps !== 0) {
+        const avegareCurrentStep = _.mean(Array.from(containersInfo)
+            .map(([v, a]) => a.currentImageSteps.currentStep)
+            .map(Number));
+        return _.round((avegareCurrentStep / totalSteps) * 100);
+    }
 };
 const containersBuildStepList = (data) => {
     // example of regexp below: [ `#12 [image-name 4/6]` ]

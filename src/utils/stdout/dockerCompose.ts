@@ -1,6 +1,7 @@
 import { ChildProcess } from 'child_process'
 import { ExecutorCallbackProps } from '../../interfaces/executor.callback.props.interface.js'
 import { StdHandler } from '../../interfaces/StdHandler.interface.js'
+import _ from 'lodash'
 
 interface ContainerBuildStepInfo {
 	globalStep: string
@@ -15,7 +16,7 @@ export const dockerComposeProcessHandler: StdHandler = (
 	childProcess: ChildProcess,
 	cb: (ecbProps: ExecutorCallbackProps) => void,
 ) => {
-	const containersInfo = new Map<string, unknown>()
+	const containersInfo = new Map<string, ContainerBuildStepInfo>()
 
 	console.log('docker_compose !!!')
 	childProcess.on('close', (code, signal) => {
@@ -24,9 +25,37 @@ export const dockerComposeProcessHandler: StdHandler = (
 	})
 	childProcess.stdout?.on('data', (chunk) => {
 		const stepList = containersBuildStepList(chunk)
-		if (stepList) console.dir({ stepList }, { depth: null, colors: true })
-		// if (stepList) stepList.map((step) => {})
+		const percents = getDockerComposeProcessPercents(stepList, containersInfo)
+		if (percents) cb({ dockerComposePercent: percents })
 	})
+}
+
+const getDockerComposeProcessPercents = (
+	stepList: (ContainerBuildStepInfo | undefined)[] | undefined,
+	containersInfo: Map<string, ContainerBuildStepInfo>,
+) => {
+	let totalSteps: number = 0
+
+	if (stepList) {
+		stepList.map((containerBuildStepInfo) => {
+			if (containerBuildStepInfo && containerBuildStepInfo.currentImageSteps) {
+				totalSteps = Number(containerBuildStepInfo.currentImageSteps.totalSteps)
+				containersInfo.set(
+					containerBuildStepInfo.imageName,
+					containerBuildStepInfo,
+				)
+			}
+		})
+	}
+
+	if (containersInfo.size !== 0 && totalSteps !== 0) {
+		const avegareCurrentStep = _.mean(
+			Array.from(containersInfo)
+				.map(([v, a]) => a.currentImageSteps!.currentStep)
+				.map(Number),
+		)
+		return _.round((avegareCurrentStep / totalSteps) * 100)
+	}
 }
 
 const containersBuildStepList = (data: string) => {
