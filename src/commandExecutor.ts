@@ -22,7 +22,10 @@ export const commandExecutor = (
 				// cb({ dockerComposeExitCode: code })
 			})
 			shellProcess.stdout?.on('data', (chunk) => {
-				console.dir({ check: containersBuildStepList(chunk)?.flat() })
+				console.dir(
+					{ check: containersBuildStepList(chunk)?.flat() },
+					{ showHidden: false, depth: null, colors: true },
+				)
 				// cb({ stdoChunk: chunk.toString() })
 			})
 		}
