@@ -4,7 +4,7 @@ import shelljs from 'shelljs'
 
 const agregateDockerComposeChunk = (chunk: string) => {
 	const match = chunk.match(/#\d{1,} \[\S+ \d{1,}\/\d{1,}\]/gm)
-	console.log({ chunk_match: match })
+	if (match) console.log({ chunk_match: match })
 }
 
 export const commandExecutor = (
@@ -17,7 +17,8 @@ export const commandExecutor = (
 		if (setup === 'docker_compose') {
 			console.log('docker_compose !!!')
 			shellProcess.on('close', (code, signal) => {
-				cb({ dockerComposeExitCode: code })
+				console.log({ exitCode: code, isDone: code === 0 ? true : false })
+				// cb({ dockerComposeExitCode: code })
 			})
 			shellProcess.stdout?.on('data', (chunk) => {
 				agregateDockerComposeChunk(chunk)
