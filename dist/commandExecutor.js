@@ -1,5 +1,8 @@
 import shelljs from 'shelljs';
-const agregateDockerComposeChunk = (chunk) => { };
+const agregateDockerComposeChunk = (chunk) => {
+    const match = chunk.match(/#\d{1,} \[\S+ \d{1,}\/\d{1,}\]/gm);
+    console.log({ chunk_match: match });
+};
 export const commandExecutor = ({ shellCommand, setup }, cb) => {
     const shellProcess = shelljs.exec(shellCommand, { async: true, silent: true });
     if (setup) {
@@ -9,7 +12,8 @@ export const commandExecutor = ({ shellCommand, setup }, cb) => {
                 cb({ dockerComposeExitCode: code });
             });
             shellProcess.stdout?.on('data', (chunk) => {
-                cb({ stdoChunk: chunk.toString() });
+                agregateDockerComposeChunk(chunk);
+                // cb({ stdoChunk: chunk.toString() })
             });
         }
     }
