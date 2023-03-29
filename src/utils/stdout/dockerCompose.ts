@@ -24,8 +24,8 @@ export const dockerComposeProcessHandler: StdHandler = (
 	})
 	childProcess.stdout?.on('data', (chunk) => {
 		const stepList = containersBuildStepList(chunk)
-
-		if (stepList) stepList.map((step) => {})
+		console.log({ stepList })
+		// if (stepList) stepList.map((step) => {})
 	})
 }
 
