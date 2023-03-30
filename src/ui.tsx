@@ -90,7 +90,11 @@ export const App = () => {
 					initialIndex={2}
 				/>
 			)}
-			<SelectInput items={[{ label: '', value: '' }]} isFocused={true} />
+			<SelectInput
+				indicatorComponent={() => null}
+				items={[{ label: '', value: '' }]}
+				isFocused={true}
+			/>
 		</>
 	)
 }

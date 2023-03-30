@@ -56,5 +56,5 @@ export const App = () => {
                 percent !== 0 ? percent : null)) : (React.createElement(Text, { color: "#aaeef3" },
                 ' ' + ' ',
                 label)), initialIndex: 2 })),
-        React.createElement(SelectInput, { items: [{ label: '', value: '' }], isFocused: true })));
+        React.createElement(SelectInput, { indicatorComponent: () => null, items: [{ label: '', value: '' }], isFocused: true })));
 };
