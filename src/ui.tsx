@@ -90,7 +90,7 @@ export const App = () => {
 					initialIndex={2}
 				/>
 			)}
-			<SelectInput />
+			<SelectInput items={[{ label: '', value: '' }]} isFocused={true} />
 		</>
 	)
 }
