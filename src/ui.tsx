@@ -17,7 +17,7 @@ export const App = () => {
 	}, [])
 
 	// const { isFocused, focus } = useFocus()
-	// const[isSelectInputFocused, setSelectInputFocus] = useState(true)
+	const[isSelectInputFocused, setSelectInputFocus] = useState(true)
 	const [isDone, setIsDone] = useState(false)
 	const [percent, setPercent] = useState(0)
 
@@ -49,13 +49,13 @@ export const App = () => {
 				</Text>
 			) : (
 				<SelectInput
-					// isFocused={isSelectInputFocused}
+					isFocused={isSelectInputFocused}
 					onSelect={(item) =>
 						commandExecutor(item.value!, (cbProps) => {
-							// setSelectInputFocus(false)
+							setSelectInputFocus(false)
 							if (cbProps.dockerComposeExitCode) {
 								setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false)
-								// setSelectInputFocus(true)
+								setSelectInputFocus(true)
 							}
 
 							if (cbProps.dockerComposePercent)

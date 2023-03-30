@@ -13,7 +13,7 @@ export const App = () => {
         shell.exec('clear');
     }, []);
     // const { isFocused, focus } = useFocus()
-    // const[isSelectInputFocused, setSelectInputFocus] = useState(true)
+    const [isSelectInputFocused, setSelectInputFocus] = useState(true);
     const [isDone, setIsDone] = useState(false);
     const [percent, setPercent] = useState(0);
     const { yamlConfig, isError, isLoading } = useYamlConfig();
@@ -34,15 +34,11 @@ export const App = () => {
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : isError ? (React.createElement(Text, null,
             "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043A\u043E\u043D\u0444\u0438\u0433-\u0444\u0430\u0439\u043B:",
             ' ',
-            chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput
-        // isFocused={isSelectInputFocused}
-        , { 
-            // isFocused={isSelectInputFocused}
-            onSelect: (item) => commandExecutor(item.value, (cbProps) => {
-                // setSelectInputFocus(false)
+            chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { isFocused: isSelectInputFocused, onSelect: (item) => commandExecutor(item.value, (cbProps) => {
+                setSelectInputFocus(false);
                 if (cbProps.dockerComposeExitCode) {
                     setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);
-                    // setSelectInputFocus(true)
+                    setSelectInputFocus(true);
                 }
                 if (cbProps.dockerComposePercent)
                     setPercent(cbProps.dockerComposePercent);
