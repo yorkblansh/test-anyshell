@@ -4,7 +4,7 @@ export const dockerComposeProcessHandler = (childProcess, cb) => {
     console.log('docker_compose !!!');
     childProcess.on('close', (code, signal) => {
         // console.log({ exitCode: code, isDone: code === 0 ? true : false })
-        if (code)
+        if (code !== null)
             cb({ dockerComposeExitCode: code });
     });
     childProcess.stdout?.on('data', (chunk) => {
