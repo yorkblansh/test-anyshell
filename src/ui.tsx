@@ -59,7 +59,9 @@ export const App = () => {
 						commandExecutor(item.value!, (cbProps) => {
 							console.log({
 								exitCode:
-									cbProps.dockerComposeExitCode === 0 ? 'done' : 'notDONE',
+									cbProps.dockerComposeExitCode === 0
+										? setSelectInputFocus(true)
+										: setSelectInputFocus(false),
 							})
 
 							if (cbProps.dockerComposeExitCode) {
