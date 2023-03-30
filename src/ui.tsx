@@ -26,6 +26,8 @@ export const App = () => {
 		? Object.keys(yamlConfig.commandList)
 		: undefined
 
+	console.log({ isSelectInputFocused })
+
 	return (
 		<>
 			<Text>
@@ -49,7 +51,7 @@ export const App = () => {
 				</Text>
 			) : (
 				<SelectInput
-					isFocused={false}
+					// isFocused={false}
 					onSelect={(item) =>
 						commandExecutor(item.value!, (cbProps) => {
 							setSelectInputFocus(true)
@@ -93,7 +95,7 @@ export const App = () => {
 			<SelectInput
 				indicatorComponent={() => null}
 				items={[{ label: '', value: '' }]}
-				isFocused={true}
+				isFocused={false}
 			/>
 		</>
 	)
