@@ -37,8 +37,8 @@ export const App = () => {
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { isFocused: isSelectInputFocused, onSelect: (item) => commandExecutor(item.value, (cbProps) => {
                 setSelectInputFocus(true);
                 if (cbProps.dockerComposeExitCode) {
-                    setIsDone(cbProps.dockerComposeExitCode === 0 ? false : true);
-                    setSelectInputFocus(true);
+                    setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);
+                    setSelectInputFocus(false);
                 }
                 if (cbProps.dockerComposePercent)
                     setPercent(cbProps.dockerComposePercent);
