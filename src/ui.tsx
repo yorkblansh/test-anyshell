@@ -58,7 +58,9 @@ export const App = () => {
 						commandExecutor(item.value!, (cbProps) => {
 							if (cbProps.dockerComposeExitCode) {
 								setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false)
-								setSelectInputFocus(true)
+								setSelectInputFocus(
+									cbProps.dockerComposeExitCode === 0 ? true : false,
+								)
 							} else setSelectInputFocus(false)
 
 							if (cbProps.dockerComposePercent)
