@@ -53,7 +53,7 @@ export const App = () => {
 				</Text>
 			) : (
 				<SelectInput
-					// isFocused={false}
+					isFocused={isSelectInputFocused}
 					onSelect={(item) => {
 						setSelectInputFocus(false)
 						commandExecutor(item.value!, (cbProps) => {
@@ -102,7 +102,7 @@ export const App = () => {
 			<SelectInput
 				indicatorComponent={() => null}
 				items={[{ label: '', value: '' }]}
-				isFocused={false}
+				isFocused={!isSelectInputFocused}
 			/>
 		</>
 	)
