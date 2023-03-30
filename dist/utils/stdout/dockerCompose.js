@@ -3,8 +3,9 @@ export const dockerComposeProcessHandler = (childProcess, cb) => {
     const containersInfo = new Map();
     console.log('docker_compose !!!');
     childProcess.on('close', (code, signal) => {
-        console.log({ exitCode: code, isDone: code === 0 ? true : false });
-        // cb({ dockerComposeExitCode: code })
+        // console.log({ exitCode: code, isDone: code === 0 ? true : false })
+        if (code)
+            cb({ dockerComposeExitCode: code });
     });
     childProcess.stdout?.on('data', (chunk) => {
         const stepList = containersBuildStepList(chunk);

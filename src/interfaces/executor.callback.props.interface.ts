@@ -1,4 +1,4 @@
 export interface ExecutorCallbackProps {
-	dockerComposeExitCode?: number | null
-	dockerComposePercent: number
+	dockerComposeExitCode?: number
+	dockerComposePercent?: number
 }
