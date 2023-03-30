@@ -17,7 +17,7 @@ export const App = () => {
 	}, [])
 
 	// const { isFocused, focus } = useFocus()
-	const [isSelectInputFocused, setSelectInputFocus] = useState(true)
+
 	const [isDone, setIsDone] = useState(false)
 	const [percent, setPercent] = useState(0)
 
@@ -25,6 +25,8 @@ export const App = () => {
 	const commandNames = yamlConfig
 		? Object.keys(yamlConfig.commandList)
 		: undefined
+
+	const [isSelectInputFocused, setSelectInputFocus] = useState(true)
 
 	console.log({ isSelectInputFocused })
 

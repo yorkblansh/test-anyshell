@@ -13,13 +13,13 @@ export const App = () => {
         shell.exec('clear');
     }, []);
     // const { isFocused, focus } = useFocus()
-    const [isSelectInputFocused, setSelectInputFocus] = useState(true);
     const [isDone, setIsDone] = useState(false);
     const [percent, setPercent] = useState(0);
     const { yamlConfig, isError, isLoading } = useYamlConfig();
     const commandNames = yamlConfig
         ? Object.keys(yamlConfig.commandList)
         : undefined;
+    const [isSelectInputFocused, setSelectInputFocus] = useState(true);
     console.log({ isSelectInputFocused });
     return (React.createElement(React.Fragment, null,
         React.createElement(Text, null,
