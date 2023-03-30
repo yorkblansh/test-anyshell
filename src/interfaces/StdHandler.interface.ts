@@ -1,5 +1,5 @@
 import { ChildProcess } from 'child_process'
-import { ExecutorCallbackProps } from './executor.callback.props.interface.js'
+import { ExecutorCallbackProps } from './ExecutorCallbackProps.interface.js'
 
 export type StdHandler = (
 	childProcess: ChildProcess,

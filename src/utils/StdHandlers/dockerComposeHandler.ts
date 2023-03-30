@@ -1,5 +1,5 @@
 import { ChildProcess } from 'child_process'
-import { ExecutorCallbackProps } from '../../interfaces/executor.callback.props.interface.js'
+import { ExecutorCallbackProps } from '../../interfaces/ExecutorCallbackProps.interface.js'
 import { StdHandler } from '../../interfaces/StdHandler.interface.js'
 import _ from 'lodash'
 
@@ -12,7 +12,7 @@ interface ContainerBuildStepInfo {
 	}
 }
 
-export const dockerComposeProcessHandler: StdHandler = (
+export const dockerComposeHandler: StdHandler = (
 	childProcess: ChildProcess,
 	cb: (ecbProps: ExecutorCallbackProps) => void,
 ) => {

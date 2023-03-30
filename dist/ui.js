@@ -2,17 +2,16 @@
 import React, { useState } from 'react';
 import chalk from 'chalk';
 import SelectInput from 'ink-select-input';
-import { Text } from 'ink';
+import { Text, useInput } from 'ink';
 import shell from 'shelljs';
 import figures from 'figures';
 import { useBeforeRender } from './hooks/useBeforeRender.js';
 import { useYamlConfig } from './hooks/useYamlConfig.js';
-import { commandExecutor } from './commandExecutor.js';
+import { commandExecutor } from './utils/commandExecutor.js';
 export const App = () => {
     useBeforeRender(() => {
         shell.exec('clear');
     }, []);
-    // const { isFocused, focus } = useFocus()
     const [isDone, setIsDone] = useState(false);
     const [percent, setPercent] = useState(0);
     const { yamlConfig, isError, isLoading } = useYamlConfig();
@@ -20,7 +19,13 @@ export const App = () => {
         ? Object.keys(yamlConfig.commandList)
         : undefined;
     const [isSelectInputFocused, setSelectInputFocus] = useState(true);
-    console.log({ isSelectInputFocused });
+    useInput((input, key) => {
+        if (isSelectInputFocused) {
+            if (key.downArrow || key.upArrow) {
+                setPercent(0);
+            }
+        }
+    });
     return (React.createElement(React.Fragment, null,
         React.createElement(Text, null,
             chalk.hex('#ff0055').italic.bgWhiteBright(' cliper '),
@@ -54,13 +59,13 @@ export const App = () => {
                 key: commandName,
                 value: yamlConfig?.commandList[commandName],
             })), indicatorComponent: ({ isSelected }) => isSelected ? (React.createElement(Text, { color: "#ffff86" },
-                isDone ? 'done' : null,
+                percent === 100 ? 'done' : null,
                 " ",
                 figures.pointer)) : null, itemComponent: ({ isSelected, label }) => isSelected ? (React.createElement(Text, { color: "#ff5eea" },
                 ' ',
                 label,
                 " ",
-                percent !== 0 ? percent : null)) : (React.createElement(Text, { color: "#aaeef3" },
+                percent === 100 || percent === 0 ? null : percent)) : (React.createElement(Text, { color: "#aaeef3" },
                 ' ' + ' ',
                 label)), initialIndex: 2 })),
         React.createElement(SelectInput, { indicatorComponent: () => null, items: [{ label: '', value: '' }], isFocused: isSelectInputFocused ? false : true })));

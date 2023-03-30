@@ -2,21 +2,19 @@
 import React, { useState } from 'react'
 import chalk from 'chalk'
 import SelectInput from 'ink-select-input'
-import { Text, useFocus } from 'ink'
+import { Text, useFocus, useInput } from 'ink'
 import shell from 'shelljs'
 import _ from 'lodash'
 import Spinner from 'ink-spinner'
 import figures from 'figures'
 import { useBeforeRender } from './hooks/useBeforeRender.js'
 import { useYamlConfig } from './hooks/useYamlConfig.js'
-import { commandExecutor } from './commandExecutor.js'
+import { commandExecutor } from './utils/commandExecutor.js'
 
 export const App = () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
 	}, [])
-
-	// const { isFocused, focus } = useFocus()
 
 	const [isDone, setIsDone] = useState(false)
 	const [percent, setPercent] = useState(0)
@@ -28,7 +26,13 @@ export const App = () => {
 
 	const [isSelectInputFocused, setSelectInputFocus] = useState(true)
 
-	console.log({ isSelectInputFocused })
+	useInput((input, key) => {
+		if (isSelectInputFocused) {
+			if (key.downArrow || key.upArrow) {
+				setPercent(0)
+			}
+		}
+	})
 
 	return (
 		<>
@@ -79,7 +83,7 @@ export const App = () => {
 					indicatorComponent={({ isSelected }) =>
 						isSelected ? (
 							<Text color="#ffff86">
-								{isDone ? 'done' : null} {figures.pointer}
+								{percent === 100 ? 'done' : null} {figures.pointer}
 							</Text>
 						) : null
 					}
@@ -87,7 +91,8 @@ export const App = () => {
 						isSelected ? (
 							<Text color="#ff5eea">
 								{' '}
-								{label} {percent !== 0 ? percent : null}
+								{label} {percent === 100 || percent === 0 ? null : percent}
+								{/* {percent !== 0 ? percent : percent === 100 ? null : percent} */}
 							</Text>
 						) : (
 							<Text color="#aaeef3">
