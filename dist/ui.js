@@ -42,11 +42,9 @@ export const App = () => {
             onSelect: (item) => {
                 setSelectInputFocus(false);
                 commandExecutor(item.value, (cbProps) => {
-                    console.log({
-                        exitCode: cbProps.dockerComposeExitCode === 0
-                            ? setSelectInputFocus(true)
-                            : setSelectInputFocus(false),
-                    });
+                    cbProps.dockerComposeExitCode === 0
+                        ? setSelectInputFocus(true)
+                        : setSelectInputFocus(false);
                     if (cbProps.dockerComposeExitCode) {
                         setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);
                         console.log('HERE MUST BE INPUT FoCUS TRUEEE!!!!');
