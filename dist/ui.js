@@ -12,7 +12,8 @@ export const App = () => {
     useBeforeRender(() => {
         shell.exec('clear');
     }, []);
-    // const [isSelectInputFocused, setSelectInputFocus] = useState(true)
+    // const { isFocused, focus } = useFocus()
+    // const[isSelectInputFocused, setSelectInputFocus] = useState(true)
     const [isDone, setIsDone] = useState(false);
     const [percent, setPercent] = useState(0);
     const { yamlConfig, isError, isLoading } = useYamlConfig();
@@ -58,5 +59,6 @@ export const App = () => {
                 " ",
                 percent !== 0 ? percent : null)) : (React.createElement(Text, { color: "#aaeef3" },
                 ' ' + ' ',
-                label)), initialIndex: 2 }))));
+                label)), initialIndex: 2 })),
+        React.createElement(SelectInput, null)));
 };

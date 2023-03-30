@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import chalk from 'chalk'
 import SelectInput from 'ink-select-input'
-import { Text } from 'ink'
+import { Text, useFocus } from 'ink'
 import shell from 'shelljs'
 import _ from 'lodash'
 import Spinner from 'ink-spinner'
@@ -16,7 +16,8 @@ export const App = () => {
 		shell.exec('clear')
 	}, [])
 
-	// const [isSelectInputFocused, setSelectInputFocus] = useState(true)
+	// const { isFocused, focus } = useFocus()
+	// const[isSelectInputFocused, setSelectInputFocus] = useState(true)
 	const [isDone, setIsDone] = useState(false)
 	const [percent, setPercent] = useState(0)
 
@@ -89,6 +90,7 @@ export const App = () => {
 					initialIndex={2}
 				/>
 			)}
+			<SelectInput />
 		</>
 	)
 }
