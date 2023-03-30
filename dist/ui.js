@@ -33,7 +33,7 @@ export const App = () => {
                 if (cbProps.dockerComposeExitCode)
                     setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);
                 if (cbProps.dockerComposePercent)
-                    console.log({ percent: cbProps.dockerComposePercent });
+                    setPercent(cbProps.dockerComposePercent);
             }), items: Object.keys(parsedYaml.commandList).map((commandName) => ({
                 label: commandName,
                 key: commandName,
