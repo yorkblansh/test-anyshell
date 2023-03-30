@@ -21,7 +21,7 @@ export const App = () => {
 	const [percent, setPercent] = useState(0)
 
 	const { yamlConfig, isError, isLoading } = useYamlConfig()
-	let commandList = yamlConfig.commandList
+	const commandList = yamlConfig.commandList
 	const commandNames = Object.keys(commandList)
 
 	return (
