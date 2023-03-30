@@ -17,7 +17,7 @@ export const App = () => {
 	}, [])
 
 	const [isDone, setIsDone] = useState(false)
-	const [chunk, setCunk] = useState<any>({})
+	const [percent, setPercent] = useState(0)
 
 	const { parsedYaml, isError, isLoading } = useCommandList()
 
@@ -66,7 +66,10 @@ export const App = () => {
 					}
 					itemComponent={({ isSelected, label }) =>
 						isSelected ? (
-							<Text color="#ff5eea"> {label}</Text>
+							<Text color="#ff5eea">
+								{' '}
+								{label} {percent !== 0 ? percent : null}
+							</Text>
 						) : (
 							<Text color="#aaeef3">
 								{' ' + ' '}

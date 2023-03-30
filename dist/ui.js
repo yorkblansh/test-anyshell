@@ -13,7 +13,7 @@ export const App = () => {
         shell.exec('clear');
     }, []);
     const [isDone, setIsDone] = useState(false);
-    const [chunk, setCunk] = useState({});
+    const [percent, setPercent] = useState(0);
     const { parsedYaml, isError, isLoading } = useCommandList();
     return (React.createElement(React.Fragment, null,
         React.createElement(Text, null,
@@ -42,8 +42,10 @@ export const App = () => {
                 isDone ? 'done' : null,
                 " ",
                 figures.pointer)) : null, itemComponent: ({ isSelected, label }) => isSelected ? (React.createElement(Text, { color: "#ff5eea" },
+                ' ',
+                label,
                 " ",
-                label)) : (React.createElement(Text, { color: "#aaeef3" },
+                percent !== 0 ? percent : null)) : (React.createElement(Text, { color: "#aaeef3" },
                 ' ' + ' ',
                 label)), initialIndex: 2 }))));
 };
