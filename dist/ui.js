@@ -35,7 +35,7 @@ export const App = () => {
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : isError ? (React.createElement(Text, null,
             "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043A\u043E\u043D\u0444\u0438\u0433-\u0444\u0430\u0439\u043B:",
             ' ',
-            chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { isFocused: isSelectInputFocused, onSelect: (item) => {
+            chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { isFocused: isSelectInputFocused ? true : false, onSelect: (item) => {
                 setSelectInputFocus(false);
                 commandExecutor(item.value, (cbProps) => {
                     cbProps.dockerComposeExitCode === 0
@@ -63,5 +63,5 @@ export const App = () => {
                 percent !== 0 ? percent : null)) : (React.createElement(Text, { color: "#aaeef3" },
                 ' ' + ' ',
                 label)), initialIndex: 2 })),
-        React.createElement(SelectInput, { indicatorComponent: () => null, items: [{ label: '', value: '' }], isFocused: !isSelectInputFocused })));
+        React.createElement(SelectInput, { indicatorComponent: () => null, items: [{ label: '', value: '' }], isFocused: isSelectInputFocused ? false : true })));
 };
