@@ -6,15 +6,18 @@ import { Text } from 'ink';
 import shell from 'shelljs';
 import figures from 'figures';
 import { useBeforeRender } from './hooks/useBeforeRender.js';
-import { useCommandList } from './hooks/useCommands.js';
+import { useYamlConfig } from './hooks/useYamlConfig.js';
 import { commandExecutor } from './commandExecutor.js';
 export const App = () => {
     useBeforeRender(() => {
         shell.exec('clear');
     }, []);
+    const [isSelectInputFocused, setSelectInputFocus] = useState(true);
     const [isDone, setIsDone] = useState(false);
     const [percent, setPercent] = useState(0);
-    const { parsedYaml, isError, isLoading } = useCommandList();
+    const { yamlConfig, isError, isLoading } = useYamlConfig();
+    let commandList = yamlConfig.commandList;
+    const commandNames = Object.keys(commandList);
     return (React.createElement(React.Fragment, null,
         React.createElement(Text, null,
             chalk.hex('#ff0055').italic.bgWhiteBright(' cliper '),
@@ -29,15 +32,18 @@ export const App = () => {
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : isError ? (React.createElement(Text, null,
             "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043A\u043E\u043D\u0444\u0438\u0433-\u0444\u0430\u0439\u043B:",
             ' ',
-            chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { onSelect: (item) => commandExecutor(item.value, (cbProps) => {
-                if (cbProps.dockerComposeExitCode)
+            chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { isFocused: isSelectInputFocused, onSelect: (item) => commandExecutor(item.value, (cbProps) => {
+                setSelectInputFocus(false);
+                if (cbProps.dockerComposeExitCode) {
                     setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);
+                    setSelectInputFocus(true);
+                }
                 if (cbProps.dockerComposePercent)
                     setPercent(cbProps.dockerComposePercent);
-            }), items: Object.keys(parsedYaml.commandList).map((commandName) => ({
+            }), items: commandNames.map((commandName) => ({
                 label: commandName,
                 key: commandName,
-                value: parsedYaml.commandList[commandName],
+                value: commandList[commandName],
             })), indicatorComponent: ({ isSelected }) => isSelected ? (React.createElement(Text, { color: "#ffff86" },
                 isDone ? 'done' : null,
                 " ",

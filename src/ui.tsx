@@ -8,7 +8,7 @@ import _ from 'lodash'
 import Spinner from 'ink-spinner'
 import figures from 'figures'
 import { useBeforeRender } from './hooks/useBeforeRender.js'
-import { useCommandList } from './hooks/useCommands.js'
+import { useYamlConfig } from './hooks/useYamlConfig.js'
 import { commandExecutor } from './commandExecutor.js'
 
 export const App = () => {
@@ -16,10 +16,13 @@ export const App = () => {
 		shell.exec('clear')
 	}, [])
 
+	const [isSelectInputFocused, setSelectInputFocus] = useState(true)
 	const [isDone, setIsDone] = useState(false)
 	const [percent, setPercent] = useState(0)
 
-	const { parsedYaml, isError, isLoading } = useCommandList()
+	const { yamlConfig, isError, isLoading } = useYamlConfig()
+	let commandList = yamlConfig.commandList
+	const commandNames = Object.keys(commandList)
 
 	return (
 		<>
@@ -44,18 +47,23 @@ export const App = () => {
 				</Text>
 			) : (
 				<SelectInput
+					isFocused={isSelectInputFocused}
 					onSelect={(item) =>
 						commandExecutor(item.value, (cbProps) => {
-							if (cbProps.dockerComposeExitCode)
+							setSelectInputFocus(false)
+							if (cbProps.dockerComposeExitCode) {
 								setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false)
+								setSelectInputFocus(true)
+							}
+
 							if (cbProps.dockerComposePercent)
 								setPercent(cbProps.dockerComposePercent)
 						})
 					}
-					items={Object.keys(parsedYaml.commandList).map((commandName) => ({
+					items={commandNames.map((commandName) => ({
 						label: commandName,
 						key: commandName,
-						value: parsedYaml.commandList[commandName],
+						value: commandList[commandName],
 					}))}
 					indicatorComponent={({ isSelected }) =>
 						isSelected ? (

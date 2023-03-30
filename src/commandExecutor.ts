@@ -1,4 +1,4 @@
-import { Command } from './interfaces/commandList.interface.js'
+import { Command } from './interfaces/YamlConfig.interface.js'
 import { ExecutorCallbackProps } from './interfaces/executor.callback.props.interface.js'
 import shelljs from 'shelljs'
 import { dockerComposeProcessHandler } from './utils/stdout/dockerCompose.js'

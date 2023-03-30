@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import fs from 'fs/promises'
 import YAML from 'yaml'
-import { CommandList } from '../interfaces/commandList.interface.js'
+import { YamlConfig } from '../interfaces/YamlConfig.interface.js'
 import { ReadFileError } from '../interfaces/readfile.error.interface.js'
 
-export const useCommandList = () => {
+export const useYamlConfig = () => {
 	const [data, setData] = useState<
-		(CommandList & { error: ReadFileError }) | null
+		(YamlConfig & { error: ReadFileError }) | null
 	>(null)
+
 	const isLoading: boolean = data === null
 	const isError: boolean = data !== null && data.error !== undefined
 
@@ -18,7 +19,7 @@ export const useCommandList = () => {
 	}, [])
 
 	return {
-		parsedYaml: data as CommandList,
+		yamlConfig: data as YamlConfig,
 		isLoading,
 		isError,
 		errorCode: isError && data ? data.error.code : undefined,

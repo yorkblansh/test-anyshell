@@ -7,6 +7,6 @@ export interface Command {
 	setup?: Setup
 }
 
-export interface CommandList {
+export interface YamlConfig {
 	commandList: { [commandName: string]: Command }
 }
