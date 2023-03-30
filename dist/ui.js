@@ -40,11 +40,12 @@ export const App = () => {
         , { 
             // isFocused={false}
             onSelect: (item) => commandExecutor(item.value, (cbProps) => {
-                setSelectInputFocus(false);
                 if (cbProps.dockerComposeExitCode) {
                     setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);
                     setSelectInputFocus(true);
                 }
+                else
+                    setSelectInputFocus(false);
                 if (cbProps.dockerComposePercent)
                     setPercent(cbProps.dockerComposePercent);
             }), items: commandNames?.map((commandName) => ({
