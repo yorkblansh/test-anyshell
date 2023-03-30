@@ -34,7 +34,7 @@ export const App = () => {
             chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : isError ? (React.createElement(Text, null,
             "\u041D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u043A\u043E\u043D\u0444\u0438\u0433-\u0444\u0430\u0439\u043B:",
             ' ',
-            chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { isFocused: isSelectInputFocused, onSelect: (item) => commandExecutor(item.value, (cbProps) => {
+            chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml '))) : (React.createElement(SelectInput, { isFocused: false, onSelect: (item) => commandExecutor(item.value, (cbProps) => {
                 setSelectInputFocus(true);
                 if (cbProps.dockerComposeExitCode) {
                     setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false);

@@ -49,7 +49,7 @@ export const App = () => {
 				</Text>
 			) : (
 				<SelectInput
-					isFocused={isSelectInputFocused}
+					isFocused={false}
 					onSelect={(item) =>
 						commandExecutor(item.value!, (cbProps) => {
 							setSelectInputFocus(true)
