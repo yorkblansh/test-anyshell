@@ -6,11 +6,11 @@ import { ReadFileError } from '../interfaces/readfile.error.interface.js'
 
 export const useYamlConfig = () => {
 	const [data, setData] = useState<
-		(YamlConfig & { error: ReadFileError }) | null
-	>(null)
+		(YamlConfig & { error: ReadFileError }) | undefined
+	>(undefined)
 
-	const isLoading: boolean = data === null
-	const isError: boolean = data !== null && data.error !== undefined
+	const isLoading: boolean = data === undefined
+	const isError: boolean = data !== undefined && data.error !== undefined
 
 	useEffect(() => {
 		fs.readFile('./.anyshell.yaml')
@@ -19,7 +19,7 @@ export const useYamlConfig = () => {
 	}, [])
 
 	return {
-		yamlConfig: data as YamlConfig,
+		yamlConfig: data,
 		isLoading,
 		isError,
 		errorCode: isError && data ? data.error.code : undefined,

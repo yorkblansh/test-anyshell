@@ -21,8 +21,9 @@ export const App = () => {
 	const [percent, setPercent] = useState(0)
 
 	const { yamlConfig, isError, isLoading } = useYamlConfig()
-	const commandList = yamlConfig.commandList
-	const commandNames = Object.keys(commandList)
+	const commandNames = yamlConfig
+		? Object.keys(yamlConfig.commandList)
+		: undefined
 
 	return (
 		<>
@@ -49,7 +50,7 @@ export const App = () => {
 				<SelectInput
 					isFocused={isSelectInputFocused}
 					onSelect={(item) =>
-						commandExecutor(item.value, (cbProps) => {
+						commandExecutor(item.value!, (cbProps) => {
 							setSelectInputFocus(false)
 							if (cbProps.dockerComposeExitCode) {
 								setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false)
@@ -60,10 +61,10 @@ export const App = () => {
 								setPercent(cbProps.dockerComposePercent)
 						})
 					}
-					items={commandNames.map((commandName) => ({
+					items={commandNames?.map((commandName) => ({
 						label: commandName,
 						key: commandName,
-						value: commandList[commandName],
+						value: yamlConfig?.commandList[commandName],
 					}))}
 					indicatorComponent={({ isSelected }) =>
 						isSelected ? (

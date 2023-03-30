@@ -16,8 +16,9 @@ export const App = () => {
     const [isDone, setIsDone] = useState(false);
     const [percent, setPercent] = useState(0);
     const { yamlConfig, isError, isLoading } = useYamlConfig();
-    const commandList = yamlConfig.commandList;
-    const commandNames = Object.keys(commandList);
+    const commandNames = yamlConfig
+        ? Object.keys(yamlConfig.commandList)
+        : undefined;
     return (React.createElement(React.Fragment, null,
         React.createElement(Text, null,
             chalk.hex('#ff0055').italic.bgWhiteBright(' cliper '),
@@ -40,10 +41,10 @@ export const App = () => {
                 }
                 if (cbProps.dockerComposePercent)
                     setPercent(cbProps.dockerComposePercent);
-            }), items: commandNames.map((commandName) => ({
+            }), items: commandNames?.map((commandName) => ({
                 label: commandName,
                 key: commandName,
-                value: commandList[commandName],
+                value: yamlConfig?.commandList[commandName],
             })), indicatorComponent: ({ isSelected }) => isSelected ? (React.createElement(Text, { color: "#ffff86" },
                 isDone ? 'done' : null,
                 " ",

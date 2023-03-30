@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import fs from 'fs/promises';
 import YAML from 'yaml';
 export const useYamlConfig = () => {
-    const [data, setData] = useState(null);
-    const isLoading = data === null;
-    const isError = data !== null && data.error !== undefined;
+    const [data, setData] = useState(undefined);
+    const isLoading = data === undefined;
+    const isError = data !== undefined && data.error !== undefined;
     useEffect(() => {
         fs.readFile('./.anyshell.yaml')
             .then((buffer) => YAML.parse(buffer.toString('utf8')))
