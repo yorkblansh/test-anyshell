@@ -1,5 +1,5 @@
 import { ChildProcess } from 'child_process'
-import { ExecutorCallbackProps } from '../../interfaces/ExecutorCallbackProps.interface.js'
+// import { DockerComposeExecutorCallbackProps } from '../../interfaces/ExecutorCallbackProps.interface.js'
 import { StdHandler } from '../../interfaces/StdHandler.interface.js'
 import _ from 'lodash'
 
@@ -12,9 +12,16 @@ interface ContainerBuildStepInfo {
 	}
 }
 
-export const dockerComposeHandler: StdHandler = (
+export interface DockerComposeExecutorCallbackProps {
+	dockerComposeExitCode?: number
+	dockerComposePercent?: number
+}
+
+export const dockerComposeHandler: StdHandler<
+	DockerComposeExecutorCallbackProps
+> = (
 	childProcess: ChildProcess,
-	cb: (ecbProps: ExecutorCallbackProps) => void,
+	cb: (ecbProps: DockerComposeExecutorCallbackProps) => void,
 ) => {
 	const containersInfo = new Map<string, ContainerBuildStepInfo>()
 

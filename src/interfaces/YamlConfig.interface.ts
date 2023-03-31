@@ -1,4 +1,4 @@
-type Setup = 'docker_compose'
+export type Setup = 'docker_compose' | 'default'
 
 export interface Command {
 	shellCommand: string
