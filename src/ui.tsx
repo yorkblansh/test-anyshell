@@ -15,6 +15,7 @@ import { useProcessResultReset } from './hooks/useProcessResultsReset.js'
 
 //comment from dev-feat
 //one more comment from dev-feat
+//comment from dev
 export const App = () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
