@@ -14,6 +14,7 @@ import { commandExecutor } from './utils/commandExecutor.js'
 import { useProcessResultReset } from './hooks/useProcessResultsReset.js'
 
 //www
+//www1
 export const App = () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
