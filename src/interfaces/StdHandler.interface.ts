@@ -1,7 +1,7 @@
 import { ChildProcess } from 'child_process'
-import { DockerComposeExecutorCallbackProps } from './ExecutorCallbackProps.interface.js'
+import { ExecutionCallbackProps } from './ExecutorCallbackProps.interface.js'
 
-export type StdHandler<T> = (
+export type StdHandler = (
 	childProcess: ChildProcess,
-	cb: (executorCallbackProps: T) => void,
+	cb: (executorCallbackProps: ExecutionCallbackProps) => void,
 ) => void

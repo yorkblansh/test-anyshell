@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import React, { useState } from 'react'
 import chalk from 'chalk'
-import SelectInput from 'ink-select-input'
-import { Text, useFocus, useInput } from 'ink'
+import Menu from 'ink-select-input'
+import HiddenMenu from 'ink-select-input'
+import { Text } from 'ink'
 import shell from 'shelljs'
 import _ from 'lodash'
 import Spinner from 'ink-spinner'
@@ -10,29 +11,24 @@ import figures from 'figures'
 import { useBeforeRender } from './hooks/useBeforeRender.js'
 import { useYamlConfig } from './hooks/useYamlConfig.js'
 import { commandExecutor } from './utils/commandExecutor.js'
+import { useProcessResultReset } from './hooks/useProcessResultsReset.js'
 
 export const App = () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
 	}, [])
 
-	const [isDone, setIsDone] = useState(false)
 	const [percent, setPercent] = useState(0)
 
 	const { yamlConfig, isError, isLoading } = useYamlConfig()
+
 	const commandNames = yamlConfig
 		? Object.keys(yamlConfig.commandList)
 		: undefined
 
-	const [isSelectInputFocused, setSelectInputFocus] = useState(true)
+	const [isMenuFocused, setMenuFocus] = useState(true)
 
-	useInput((input, key) => {
-		if (isSelectInputFocused) {
-			if (key.downArrow || key.upArrow) {
-				setPercent(0)
-			}
-		}
-	})
+	useProcessResultReset(isMenuFocused, setPercent)
 
 	return (
 		<>
@@ -56,23 +52,16 @@ export const App = () => {
 					{chalk.hex('#ff0055').italic.bgWhiteBright(' .anyshell.yaml ')}
 				</Text>
 			) : (
-				<SelectInput
-					isFocused={isSelectInputFocused ? true : false}
+				<Menu
+					isFocused={isMenuFocused}
 					onSelect={(item) => {
-						setSelectInputFocus(false)
-						commandExecutor(item.value!, (cbProps) => {
-							cbProps.dockerComposeExitCode === 0
-								? setSelectInputFocus(true)
-								: setSelectInputFocus(false)
+						setMenuFocus(false)
+						commandExecutor(item.value!, (callbackProps) => {
+							callbackProps.exitCode === 0
+								? setMenuFocus(true)
+								: setMenuFocus(false)
 
-							if (cbProps.dockerComposeExitCode) {
-								setIsDone(cbProps.dockerComposeExitCode === 0 ? true : false)
-								console.log('HERE MUST BE INPUT FoCUS TRUEEE!!!!')
-								setSelectInputFocus(true)
-							}
-
-							if (cbProps.dockerComposePercent)
-								setPercent(cbProps.dockerComposePercent)
+							if (callbackProps.percentage) setPercent(callbackProps.percentage)
 						})
 					}}
 					items={commandNames?.map((commandName) => ({
@@ -104,10 +93,10 @@ export const App = () => {
 					initialIndex={2}
 				/>
 			)}
-			<SelectInput
+			<HiddenMenu
 				indicatorComponent={() => null}
 				items={[{ label: '', value: '' }]}
-				isFocused={isSelectInputFocused ? false : true}
+				isFocused={!isMenuFocused}
 			/>
 		</>
 	)
