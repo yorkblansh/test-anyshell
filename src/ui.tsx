@@ -13,6 +13,7 @@ import { useYamlConfig } from './hooks/useYamlConfig.js'
 import { commandExecutor } from './utils/commandExecutor.js'
 import { useProcessResultReset } from './hooks/useProcessResultsReset.js'
 
+//comment from dev-feat
 export const App = () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
