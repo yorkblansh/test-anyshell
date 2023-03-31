@@ -3,5 +3,4 @@ export interface ReadFileError {
 	code: string
 	syscall: string
 	path: string
-	//awdjkawhkdjhwakdhkj
 }
