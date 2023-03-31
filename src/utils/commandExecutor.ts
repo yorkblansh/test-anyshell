@@ -3,7 +3,7 @@ import { ExecutionCallbackProps } from '../interfaces/ExecutorCallbackProps.inte
 import shelljs from 'shelljs'
 import { dockerComposeHandler } from './StdHandlers/dockerComposeHandler.js'
 import { StdHandler } from '../interfaces/StdHandler.interface.js'
-//awdjkhawkjdhkwaj
+
 export const commandExecutor = (
 	{ shellCommand, setup }: Command,
 	callback: (executionCallbackProps: ExecutionCallbackProps) => void,
