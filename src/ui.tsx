@@ -17,7 +17,7 @@ export const App = () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
 	}, [])
-
+//awdjkhakdjhawkjd
 	const [percent, setPercent] = useState(0)
 
 	const { yamlConfig, isError, isLoading } = useYamlConfig()
