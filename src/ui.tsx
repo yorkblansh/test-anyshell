@@ -13,8 +13,12 @@ import { useYamlConfig } from './hooks/useYamlConfig.js'
 import { commandExecutor } from './utils/commandExecutor.js'
 import { useProcessResultReset } from './hooks/useProcessResultsReset.js'
 
+
+//22
+//2222
 //11
 //1111
+
 export const App = () => {
 	useBeforeRender(() => {
 		shell.exec('clear')
